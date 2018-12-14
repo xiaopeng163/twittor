@@ -10,7 +10,7 @@ migrate = Migrate()
 login_manager = LoginManager()
 login_manager.login_view = 'login'
 
-from twittor.route import index, login, logout, register, user, page_not_found
+from twittor.route import index, login, logout, register, user, page_not_found, edit_profile
 
 
 def create_app():
@@ -25,5 +25,6 @@ def create_app():
     app.add_url_rule('/logout', 'logout', logout)
     app.add_url_rule('/register', 'register', register, methods=['GET', 'POST'])
     app.add_url_rule('/<username>', 'profile', user)
+    app.add_url_rule('/edit_profile', 'edit_profile', edit_profile, methods=['GET', 'POST'])
     app.register_error_handler(404, page_not_found)
     return app
