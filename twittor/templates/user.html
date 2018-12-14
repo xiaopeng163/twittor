@@ -5,7 +5,16 @@
 <table>
     <tr>
         <td><img src="{{ user.avatar(128) }}" alt=""></td>
-        <td>{{ user.username }}</td>
+        <td>
+            <p><b>{{ user.username }}</b></p>
+            {% if user.about_me %}
+            <p>About Me: {{ user.about_me }}</p>
+            {% endif %}
+
+            {% if user.create_time %}
+            <p>Joined: {{ user.create_time }}</p>
+            {% endif %}
+        </td>
     </tr>
 </table>
     {% for post in posts %}

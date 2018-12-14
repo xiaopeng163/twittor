@@ -12,6 +12,9 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True, index=True)
     email = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
+    about_me = db.Column(db.String(120))
+    create_time = db.Column(db.DateTime, default=datetime.utcnow)
+
     tweets = db.relationship('Tweet', backref='author', lazy='dynamic')
 
     def __repr__(self):
