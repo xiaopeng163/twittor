@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<table>
+    <tr>
+        <td><img src="{{ user.avatar(128) }}" alt=""></td>
+        <td>{{ user.username }}</td>
+    </tr>
+</table>
+    {% for post in posts %}
+    <table>
+        <tr>
+            <td><img src="{{ user.avatar(60) }}" alt=""></td>
+            <td><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></td>
+        </tr>
+    </table>
+    {% endfor %}
+{% endblock %}

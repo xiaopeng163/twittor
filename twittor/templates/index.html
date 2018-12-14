@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Hello, {{ current_user.username }}</h1>
+    <h1>Hello, <a href="/{{ current_user.username }}">{{ current_user.username }}</a></h1>
     {% for post in posts %}
     <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
     {% endfor %}
