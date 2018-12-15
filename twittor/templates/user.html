@@ -6,7 +6,21 @@
     <tr>
         <td><img src="{{ user.avatar(128) }}" alt=""></td>
         <td>
-            <p><b>{{ user.username }}</b></p>
+            <p>
+                <b>{{ user.username }}</b>
+                <p>
+                    Follower {{ user.followers.count() }} Following {{ user.followed.count() }}
+                </p>
+                <form action="" method="post">
+                    {% if user != current_user %}
+                    {% if current_user.is_following(user) %}
+                    <input type="submit" name="request_button" value="Unfollow">
+                    {% else %}
+                    <input type="submit" name="request_button" value="Follow">
+                    {% endif %}
+                    {% endif %}
+                </form>
+            </p>
             {% if user.about_me %}
             <p>About Me: {{ user.about_me }}</p>
             {% endif %}
