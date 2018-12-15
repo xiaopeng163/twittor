@@ -1,13 +1,19 @@
 from flask import render_template, redirect, url_for, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
-from twittor.forms import LoginForm, RegisterForm, EditProfileForm
+from twittor.forms import LoginForm, RegisterForm, EditProfileForm, TweetForm
 from twittor.models import User, Tweet, load_user, Tweet
 from twittor import db
 
 @login_required
 def index():
+    form = TweetForm()
+    if form.validate_on_submit():
+        t = Tweet(body=form.tweet.data, author=current_user)
+        db.session.add(t)
+        db.session.commit()
+        return redirect(url_for('index'))
     tweets = current_user.own_and_followed_tweets()
-    return render_template('index.html', tweets=tweets)
+    return render_template('index.html', tweets=tweets, form=form)
 
 
 def login():
@@ -48,7 +54,7 @@ def user(username):
     u = User.query.filter_by(username=username).first()
     if u is None:
         abort(404)
-    tweets = u.tweets
+    tweets = u.tweets.order_by(Tweet.create_time.desc())
     if request.method == 'POST':
         if request.form['request_button'] == 'Follow':
             current_user.follow(u)

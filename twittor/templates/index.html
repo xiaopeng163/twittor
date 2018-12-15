@@ -3,6 +3,18 @@
 {% block content %}
     <h1>Hello, <a href="/{{ current_user.username }}">{{ current_user.username }}</a></h1>
 
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.tweet.label }}<br>
+            {{ form.tweet(cols=50, rows=4) }}<br>
+            {% for error in form.tweet.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
     {% include '_tweets.html' %}
 
 {% endblock %}
