@@ -34,11 +34,11 @@
         </td>
     </tr>
 </table>
-    {% for post in posts %}
+    {% for tweet in tweets %}
     <table>
         <tr>
-            <td><img src="{{ user.avatar(60) }}" alt=""></td>
-            <td><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></td>
+            <td><img src="{{ tweet.author.avatar(60) }}" alt=""></td>
+            <td><p>{{ tweet.author.username }} says: <b>{{ tweet.body }}</b></p></td>
         </tr>
     </table>
     {% endfor %}

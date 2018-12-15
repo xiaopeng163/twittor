@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
 from twittor.forms import LoginForm, RegisterForm, EditProfileForm
-from twittor.models import User, Tweet, load_user
+from twittor.models import User, Tweet, load_user, Tweet
 from twittor import db
 
 @login_required
@@ -61,16 +61,7 @@ def user(username):
     u = User.query.filter_by(username=username).first()
     if u is None:
         abort(404)
-    posts = [
-        {
-            'author': {'username': u.username},
-            'body': "hi I'm {}!".format(u.username)
-        },
-        {
-            'author': {'username': u.username},
-            'body': "hi I'm {}".format(u.username)
-        }    
-    ]
+    tweets = u.tweets
     if request.method == 'POST':
         if request.form['request_button'] == 'Follow':
             current_user.follow(u)
@@ -78,7 +69,7 @@ def user(username):
         else:
             current_user.unfollow(u)
             db.session.commit()
-    return render_template('user.html', title='Profile', posts=posts, user=u)
+    return render_template('user.html', title='Profile', tweets=tweets, user=u)
 
 
 def page_not_found(e):
