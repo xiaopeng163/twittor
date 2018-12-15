@@ -61,7 +61,20 @@ def user(username):
     u = User.query.filter_by(username=username).first()
     if u is None:
         abort(404)
-    tweets = u.tweets.order_by(Tweet.create_time.desc())
+    page_num = int(request.args.get('page') or 1)
+    tweets = u.tweets.order_by(Tweet.create_time.desc()).paginate(
+        page=page_num,
+        per_page=current_app.config['TWEET_PER_PAGE'],
+        error_out=False)
+
+    next_url = url_for(
+        'profile',
+        page=tweets.next_num,
+        username=username) if tweets.has_next else None
+    prev_url = url_for(
+        'profile',
+        page=tweets.prev_num,
+        username=username) if tweets.has_prev else None
     if request.method == 'POST':
         if request.form['request_button'] == 'Follow':
             current_user.follow(u)
@@ -69,7 +82,14 @@ def user(username):
         else:
             current_user.unfollow(u)
             db.session.commit()
-    return render_template('user.html', title='Profile', tweets=tweets, user=u)
+    return render_template(
+        'user.html',
+        title='Profile',
+        tweets=tweets.items,
+        user=u,
+        next_url=next_url,
+        prev_url=prev_url
+    )
 
 
 def page_not_found(e):
