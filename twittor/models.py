@@ -1,8 +1,11 @@
 from datetime import datetime
 from hashlib import md5
+import time
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from flask import current_app
+import jwt
 
 from twittor import db, login_manager
 
@@ -63,6 +66,28 @@ class User(UserMixin, db.Model):
                 followers.c.follower_id == self.id)
         own = Tweet.query.filter_by(user_id=self.id)
         return followed.union(own).order_by(Tweet.create_time.desc())
+
+    def get_jwt(self, expire=600):
+        return jwt.encode(
+            {
+                'email': self.email,
+                'exp': time.time() + expire
+            },
+            current_app.config['SECRET_KEY'],
+            algorithm='HS256'
+        )
+
+    def verify_jwt(self, token):
+        try:
+            email = jwt.decode(
+                token,
+                current_app.config['SECRET_KEY'],
+                algorithms=['HS256']
+            )
+            email = email['email']
+        except:
+            return
+        return User.query.filter_by(email=email).first()
 
 
 @login_manager.user_loader

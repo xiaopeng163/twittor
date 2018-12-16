@@ -123,11 +123,13 @@ def reset_password_request():
                 password. Please make sure to check your spam and trash \
                 if you can't find the email."
             )
+            token = user.get_jwt()
+            url = 'http://127.0.0.1:5000/password_reset/{}'.format(token)
             send_email(
-                subject='subject',
-                recipients=['xiaoquwl@gmail.com'],
-                text_body='this is text body',
-                html_body='<h1>this is html body</h1>'
+                subject='Twittor - Reset Your Password',
+                recipients=[user.email],
+                text_body= url,
+                html_body='<h1>{}</h1>'.format(url)
             )
         return redirect(url_for('login'))
     return render_template('password_reset_request.html', form=form)
