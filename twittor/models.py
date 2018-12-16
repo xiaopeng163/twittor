@@ -75,9 +75,10 @@ class User(UserMixin, db.Model):
             },
             current_app.config['SECRET_KEY'],
             algorithm='HS256'
-        )
+        ).decode('utf-8')
 
-    def verify_jwt(self, token):
+    @staticmethod
+    def verify_jwt(token):
         try:
             email = jwt.decode(
                 token,

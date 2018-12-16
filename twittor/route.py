@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, request, \
     abort, current_app, flash
 from flask_login import login_user, current_user, logout_user, login_required
 from twittor.forms import LoginForm, RegisterForm, EditProfileForm, TweetForm, \
-    PasswdResetRequestForm
+    PasswdResetRequestForm, PasswdResetForm
 from twittor.models import User, Tweet, load_user, Tweet
 from twittor import db
 from twittor.email import send_email
@@ -133,3 +133,19 @@ def reset_password_request():
             )
         return redirect(url_for('login'))
     return render_template('password_reset_request.html', form=form)
+
+
+def password_reset(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_jwt(token)
+    if not user:
+        return redirect(url_for('login'))
+    form = PasswdResetForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        return redirect(url_for('login'))
+    return render_template(
+        'password_reset.html', title='Password Reset', form=form
+    )

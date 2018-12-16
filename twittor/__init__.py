@@ -13,7 +13,7 @@ login_manager.login_view = 'login'
 mail = Mail()
 
 from twittor.route import index, login, logout, register, user, page_not_found, \
-    edit_profile, reset_password_request
+    edit_profile, reset_password_request, password_reset
 
 
 def create_app():
@@ -34,6 +34,12 @@ def create_app():
         '/reset_password_request',
         'reset_password_request',
         reset_password_request,
+        methods=['GET', 'POST']
+    )
+    app.add_url_rule(
+        '/password_reset/<token>',
+        'password_reset',
+        password_reset,
         methods=['GET', 'POST']
     )
     app.register_error_handler(404, page_not_found)
