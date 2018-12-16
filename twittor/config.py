@@ -15,3 +15,4 @@ class Config:
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS', 1)
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME', 'username')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD', 'password')
+    MAIL_SUBJECT_RESET_PASSWORD = '[Twittor] Please Reset Your Password'

@@ -67,7 +67,7 @@ class User(UserMixin, db.Model):
         own = Tweet.query.filter_by(user_id=self.id)
         return followed.union(own).order_by(Tweet.create_time.desc())
 
-    def get_jwt(self, expire=600):
+    def get_jwt(self, expire=7200):
         return jwt.encode(
             {
                 'email': self.email,

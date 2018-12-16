@@ -124,12 +124,28 @@ def reset_password_request():
                 if you can't find the email."
             )
             token = user.get_jwt()
-            url = 'http://127.0.0.1:5000/password_reset/{}'.format(token)
+            url_password_reset = url_for(
+                'password_reset',
+                token=token,
+                _external=True
+            )
+            url_password_reset_request = url_for(
+                'reset_password_request',
+                _external=True
+            )
             send_email(
-                subject='Twittor - Reset Your Password',
+                subject=current_app.config['MAIL_SUBJECT_RESET_PASSWORD'],
                 recipients=[user.email],
-                text_body= url,
-                html_body='<h1>{}</h1>'.format(url)
+                text_body= render_template(
+                    'email/passwd_reset.txt',
+                    url_password_reset=url_password_reset,
+                    url_password_reset_request=url_password_reset_request
+                ),
+                html_body=render_template(
+                    'email/passwd_reset.html',
+                    url_password_reset=url_password_reset,
+                    url_password_reset_request=url_password_reset_request
+                )
             )
         return redirect(url_for('login'))
     return render_template('password_reset_request.html', form=form)
