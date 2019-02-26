@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     {% if title %}
     <title>{{ title }}</title>
     {% else %}
@@ -11,15 +12,17 @@
     {% endif %}
 </head>
 <body>
-    <div>
-        Twittor: <a href="{{ url_for('index') }}">Home</a>
-        {% if current_user.is_anonymous %}
-        <a href="{{ url_for('login') }}">Login</a>
-        {% else %}
-        <a href="{{ url_for('logout') }}">Logout</a>
-        {% endif %}
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+            <h5 class="my-0 mr-md-auto font-weight-normal">Twittor</h5>
+            <nav class="my-2 my-md-0 mr-md-3">
+                <a class="p-2 text-dark" href="{{ url_for('index') }}">Home</a>
+            </nav>
+            {% if current_user.is_anonymous %}
+            <a class="btn btn-outline-primary" href="{{ url_for('login') }}">Login</a>
+            {% else %}
+            <a class="btn btn-outline-primary" href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
     </div>
-    <hr>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     <ul>
