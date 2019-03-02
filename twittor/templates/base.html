@@ -15,7 +15,7 @@
     <div class="sticky-top d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
             <a class="p-2 text-dark my-0 mr-md-auto font-weight-normal" href="{{ url_for('index') }}">Twittor</a>
             <nav class="my-2 my-md-0 mr-md-3">
-                <a class="p-2 text-dark" href="{{ url_for('index') }}">Home</a>
+                <a class="p-2 text-dark" href="{{ url_for('explore') }}">Explore</a>
             </nav>
             {% if current_user.is_anonymous %}
             <a class="btn btn-outline-primary" href="{{ url_for('login') }}">Login</a>

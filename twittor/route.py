@@ -168,3 +168,17 @@ def password_reset(token):
     return render_template(
         'password_reset.html', title='Password Reset', form=form
     )
+
+
+@login_required
+def explore():
+    # get all user and sort by followers
+    page_num = int(request.args.get('page') or 1)
+    tweets = Tweet.query.order_by(Tweet.create_time.desc()).paginate(
+        page=page_num, per_page=current_app.config['TWEET_PER_PAGE'], error_out=False)
+
+    next_url = url_for('index', page=tweets.next_num) if tweets.has_next else None
+    prev_url = url_for('index', page=tweets.prev_num) if tweets.has_prev else None
+    return render_template(
+        'explore.html', tweets=tweets.items, next_url=next_url, prev_url=prev_url
+    )

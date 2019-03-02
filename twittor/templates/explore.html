@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% include '_tweets.html' %}
+
+{% if prev_url %}
+<a href="{{ prev_url }}">Prev Page</a>
+{% endif %}
+{% if next_url %}
+<a href="{{ next_url }}">Next Page</a>
+{% endif %}
+
+{% endblock %}

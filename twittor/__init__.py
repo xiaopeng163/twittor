@@ -13,7 +13,7 @@ login_manager.login_view = 'login'
 mail = Mail()
 
 from twittor.route import index, login, logout, register, user, page_not_found, \
-    edit_profile, reset_password_request, password_reset
+    edit_profile, reset_password_request, password_reset, explore
 
 
 def create_app():
@@ -43,4 +43,5 @@ def create_app():
         methods=['GET', 'POST']
     )
     app.register_error_handler(404, page_not_found)
+    app.add_url_rule('/explore', 'explore', explore)
     return app
