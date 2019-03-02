@@ -7,7 +7,16 @@
         <td><img src="{{ user.avatar(200) }}" alt=""></td>
         <td>
             <p>
-                <b>{{ user.username }}</b>
+                <form action="" method="post">
+                    <b>{{ user.username }}</b>
+                    {% if user == current_user %}
+                    {% if current_user.is_activated != 1 %}
+                    <input id="btn" class="btn btn-warning" type="submit" name="request_button" value="activate">
+                    {% else %}
+                    <span class="badge badge-success">activated</span>
+                    {% endif %}
+                    {% endif %}
+                </form>
                 <p>
                     Follower {{ user.followers.count() }} Following {{ user.followed.count() }}
                 </p>

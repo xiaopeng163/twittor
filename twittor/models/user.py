@@ -23,6 +23,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(120))
     create_time = db.Column(db.DateTime, default=datetime.utcnow)
+    is_activated = db.Column(db.Boolean, default=False)
 
     tweets = db.relationship('Tweet', backref='author', lazy='dynamic')
 
