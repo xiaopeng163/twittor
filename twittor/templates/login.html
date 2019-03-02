@@ -2,8 +2,11 @@
 
 {% block content %}
 
-    <h1>Login</h1>
-    <form action="" method="post">
+<div class='row'>
+    <div class="text-center col-lg-4"></div>
+<div class="text-center col-lg-4">
+    <h1 class="h3 mb-3 font-weight-normal">Please Login</h1>
+    <form action="" method="post" class="form-signin">
         <p>
             {{ form.username.label }}
             {{ form.username() }}
@@ -16,13 +19,13 @@
             {{ form.remember_me() }}
             {{ form.remember_me.label }}
         </p>
+        <button class="btn btn-lg btn-outline-primary" type="submit">Login</button>
         <p>
-            {{ form.submit() }}
-        </p>
-        <p>
-            <a href="{{ url_for('register') }}">New User?</a>or
+            <a href="{{ url_for('register') }}">New User?</a>or 
             <a href="{{ url_for('reset_password_request') }}">Forgot Password?</a>
         </p>
+        <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
     </form>
-
-    {% endblock %}
+</div>
+</div>
+{% endblock %}

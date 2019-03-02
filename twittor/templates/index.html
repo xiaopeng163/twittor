@@ -1,20 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Hello, <a href="/{{ current_user.username }}">{{ current_user.username }}</a></h1>
 
+<div class='row'>
+
+    <div class="col-lg-4"></div>
+    <div class="col-lg-2">
+    <h2>Hello, <a href="/{{ current_user.username }}">{{ current_user.username }}</a></h2>
+    </div>
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
-            {{ form.tweet.label }}<br>
             {{ form.tweet(cols=50, rows=4) }}<br>
             {% for error in form.tweet.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <p>{{ form.submit() }}</p>
+        <button class="btn btn-info" type="submit">Tweet</button>
     </form>
-
+</div>
+<div class='row'>
+    <div class="col-lg-4"></div>
+    <div class="col-lg-8">
     {% include '_tweets.html' %}
 
     {% if prev_url %}
@@ -23,5 +30,6 @@
     {% if next_url %}
     <a href="{{ next_url }}">Next Page</a>
     {% endif %}
-
+    </div>
+</div>
 {% endblock %}
