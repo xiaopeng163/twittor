@@ -14,7 +14,7 @@ Flask-WTF==0.14.2
 idna==2.8
 itsdangerous==1.1.0
 Jinja2==2.10
-Mako==1.0.7
+Mako==1.2.2
 MarkupSafe==1.1.0
 pycparser==2.19
 PyJWT==1.7.1
